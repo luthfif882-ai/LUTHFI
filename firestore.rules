@@ -1,0 +1,112 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Reusable Hardened Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isBootstrappedAdmin() {
+      return isSignedIn() && request.auth.token.email == 'luthfif882@gmail.com';
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        isBootstrappedAdmin() ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // 2. Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 3. Test Connection Ping
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // 4. Admin Management Collection (Strict ABAC)
+    match /admins/{adminId} {
+      allow get: if true;
+      allow list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 5. Users Collection (Private Profiles)
+    match /users/{userId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 6. Students Directory
+    match /students/{studentId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 7. Lecture Schedules
+    match /schedules/{scheduleId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 8. Class Assignments
+    match /assignments/{assignmentId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 9. Announcements
+    match /announcements/{announcementId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 10. Cash Transactions & Student Payments
+    match /cash_transactions/{transactionId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    match /cash_payments/{paymentId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 11. Memories / Photo Documentation
+    match /memories/{memoryId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 12. Birthday Messages
+    match /birthday_messages/{messageId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 13. Class Structure
+    match /class_structure/{structureId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 14. Message Wall (Pesan & Kesan SPI 1A)
+    match /messages_wall/{wallId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 15. Class Settings
+    match /class_settings/{settingId} {
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+  }
+}

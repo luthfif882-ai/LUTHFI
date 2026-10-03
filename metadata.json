@@ -1,0 +1,6 @@
+{
+  "name": "SPI 1A - Sejarah Peradaban Islam",
+  "description": "Aplikasi Web Resmi Kelas SPI 1A Semester 1, UIN Raden Mas Said Surakarta.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

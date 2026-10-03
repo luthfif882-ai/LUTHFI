@@ -1,0 +1,239 @@
+{
+  "entities": {
+    "Admin": {
+      "title": "Admin",
+      "description": "Registered administrator document for role verification",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "description": "Admin email address" },
+        "role": { "type": "string", "enum": ["admin"], "description": "User role" },
+        "createdAt": { "type": "string", "description": "Creation timestamp ISO string or server timestamp" }
+      },
+      "required": ["email", "role"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role and identification",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User UID" },
+        "name": { "type": "string", "description": "Display name" },
+        "email": { "type": "string", "description": "Email address" },
+        "role": { "type": "string", "enum": ["admin", "member"], "description": "Role" },
+        "nim": { "type": "string", "description": "Student NIM if applicable" },
+        "photoUrl": { "type": "string", "description": "Avatar photo URL" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last update timestamp" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student record in class SPI 1A",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "name": { "type": "string", "description": "Full name of student" },
+        "nim": { "type": "string", "description": "Student NIM (10 digits)" },
+        "photoUrl": { "type": "string", "description": "URL of profile photo" },
+        "whatsapp": { "type": "string", "description": "WhatsApp contact number" },
+        "instagram": { "type": "string", "description": "Instagram handle" },
+        "birthDate": { "type": "string", "description": "Date of birth (YYYY-MM-DD)" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["name", "nim"]
+    },
+    "Schedule": {
+      "title": "Schedule",
+      "description": "Course schedule item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "day": { "type": "string", "enum": ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"], "description": "Day of lecture" },
+        "startTime": { "type": "string", "description": "Start time HH:mm" },
+        "endTime": { "type": "string", "description": "End time HH:mm" },
+        "courseName": { "type": "string", "description": "Course name" },
+        "room": { "type": "string", "description": "Room code" },
+        "lecturer": { "type": "string", "description": "Lecturer name" },
+        "sks": { "type": "number", "description": "Credit points (SKS)" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["day", "startTime", "endTime", "courseName", "room", "lecturer", "sks"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Course assignment or task",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "title": { "type": "string", "description": "Assignment title" },
+        "subject": { "type": "string", "description": "Subject / course name" },
+        "description": { "type": "string", "description": "Assignment details" },
+        "deadline": { "type": "string", "description": "Deadline timestamp or ISO string" },
+        "status": { "type": "string", "enum": ["Belum dikerjakan", "Sedang dikerjakan", "Selesai"], "description": "Assignment status" },
+        "createdBy": { "type": "string", "description": "Creator name or email" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["title", "subject", "deadline", "status"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Class announcement",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "title": { "type": "string", "description": "Announcement title" },
+        "content": { "type": "string", "description": "Announcement content" },
+        "author": { "type": "string", "description": "Author name" },
+        "isPinned": { "type": "boolean", "description": "Pinned status" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["title", "content", "author"]
+    },
+    "CashTransaction": {
+      "title": "CashTransaction",
+      "description": "Income or expense record of class treasury",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "date": { "type": "string", "description": "Transaction date YYYY-MM-DD" },
+        "description": { "type": "string", "description": "Description of cash flow" },
+        "amount": { "type": "number", "description": "Amount in IDR" },
+        "type": { "type": "string", "enum": ["income", "expense"], "description": "Transaction type" },
+        "createdBy": { "type": "string", "description": "Author of transaction" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["date", "description", "amount", "type"]
+    },
+    "CashPayment": {
+      "title": "CashPayment",
+      "description": "Student monthly cash fee payment record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "studentId": { "type": "string", "description": "Student document ID" },
+        "studentName": { "type": "string", "description": "Student name" },
+        "studentNim": { "type": "string", "description": "Student NIM" },
+        "period": { "type": "string", "description": "Payment period e.g. Oktober 2026" },
+        "amount": { "type": "number", "description": "Payment amount in IDR" },
+        "isPaid": { "type": "boolean", "description": "Whether payment is complete" },
+        "paidAt": { "type": "string", "description": "Payment timestamp if paid" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["studentId", "studentName", "period", "amount", "isPaid"]
+    },
+    "Memory": {
+      "title": "Memory",
+      "description": "Class documentation photograph and caption",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "title": { "type": "string", "description": "Photo title" },
+        "caption": { "type": "string", "description": "Description or caption" },
+        "date": { "type": "string", "description": "Date taken" },
+        "album": { "type": "string", "description": "Album category" },
+        "imageUrl": { "type": "string", "description": "Image URL from Storage or CDN" },
+        "createdBy": { "type": "string", "description": "Uploader name" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["title", "imageUrl", "date"]
+    },
+    "BirthdayMessage": {
+      "title": "BirthdayMessage",
+      "description": "Birthday wish sent to a student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "recipientStudentId": { "type": "string", "description": "Recipient student document ID" },
+        "senderUid": { "type": "string", "description": "Sender User UID" },
+        "senderName": { "type": "string", "description": "Sender display name" },
+        "message": { "type": "string", "description": "Birthday greeting message" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["recipientStudentId", "senderUid", "senderName", "message"]
+    },
+    "ClassStructure": {
+      "title": "ClassStructure",
+      "description": "Position in the class organization structure",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Position key or ID" },
+        "role": { "type": "string", "description": "Role title like Ketua, Sekretaris, Bendahara" },
+        "name": { "type": "string", "description": "Officer student name" },
+        "photoUrl": { "type": "string", "description": "Officer photo URL" },
+        "description": { "type": "string", "description": "Role duties" },
+        "order": { "type": "number", "description": "Display order" },
+        "updatedAt": { "type": "string", "description": "Update timestamp" }
+      },
+      "required": ["role", "name"]
+    },
+    "MessageWall": {
+      "title": "MessageWall",
+      "description": "Pesan dan Kesan SPI 1A Wall Card",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "senderUid": { "type": "string", "description": "Sender User UID" },
+        "senderName": { "type": "string", "description": "Sender name" },
+        "message": { "type": "string", "description": "Message content" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["senderUid", "senderName", "message"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Admin identity records"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles"
+    },
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Class students collection"
+    },
+    "/schedules/{scheduleId}": {
+      "schema": "Schedule",
+      "description": "Class course schedule collection"
+    },
+    "/assignments/{assignmentId}": {
+      "schema": "Assignment",
+      "description": "Class assignments"
+    },
+    "/announcements/{announcementId}": {
+      "schema": "Announcement",
+      "description": "Class announcements"
+    },
+    "/cash_transactions/{transactionId}": {
+      "schema": "CashTransaction",
+      "description": "Class treasury transactions"
+    },
+    "/cash_payments/{paymentId}": {
+      "schema": "CashPayment",
+      "description": "Student monthly cash fee payment records"
+    },
+    "/memories/{memoryId}": {
+      "schema": "Memory",
+      "description": "Class photo documentation"
+    },
+    "/birthday_messages/{messageId}": {
+      "schema": "BirthdayMessage",
+      "description": "Birthday messages sent by members"
+    },
+    "/class_structure/{structureId}": {
+      "schema": "ClassStructure",
+      "description": "Class organization positions"
+    },
+    "/messages_wall/{wallId}": {
+      "schema": "MessageWall",
+      "description": "Pesan & Kesan SPI 1A wall entries"
+    }
+  }
+}
